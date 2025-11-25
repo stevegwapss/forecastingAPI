@@ -1,0 +1,141 @@
+{
+  "model_name": "Hybrid Transfer Learning with Category-Specific Adaptive Weights + Real-Time Adjustment",
+  "version": "1.1.0",
+  "trained_date": "2025-10-26T05:34:13.998150",
+  "updated_date": "2025-11-08T00:00:00.000000",
+  "training_data": {
+    "file": "monthly_data_8cat_no_covid.csv",
+    "months": 51,
+    "date_range": {
+      "start": "2018-09-01",
+      "end": "2025-08-01"
+    },
+    "covid_removed": "2020-04 to 2022-12 (33 months removed)",
+    "reason": "COVID-19 pandemic period + recovery distortion removed for clean training data"
+  },
+  "model_config": {
+    "lookback": 6,
+    "lstm_units": 32,
+    "dropout_rate": 0.2,
+    "dense_units": 16,
+    "epochs": 100,
+    "batch_size": 4,
+    "patience": 20,
+    "learning_rate": 0.001,
+    "fine_tune_lr": 0.0005,
+    "fine_tune_epochs": 50,
+    "blend_ratio": 0.5,
+    "adaptive_weighting": {
+      "enabled": true,
+      "method": "category_specific",
+      "volatility_lookback_months": 12,
+      "thresholds": {
+        "stable": 30,
+        "moderate": 60
+      },
+      "weights": {
+        "stable_lstm": 0.7,
+        "moderate_lstm": 0.5,
+        "volatile_lstm": 0.3
+      }
+    },
+    "realtime_adjustment": {
+      "enabled": true,
+      "pace_thresholds": {
+        "spike": 1.3,
+        "rising": 1.15,
+        "falling": 0.85,
+        "drop": 0.7
+      },
+      "blend_weights": {
+        "spike_drop": 0.8,
+        "rising_falling": 0.5,
+        "stable": 0.3
+      }
+    }
+  },
+  "categories": [
+    "respiratory",
+    "gastrointestinal",
+    "pain_aches",
+    "skin_allergy",
+    "injury_trauma",
+    "neurological_psychological",
+    "cardiovascular",
+    "fever_general"
+  ],
+  "category_volatilities": {
+    "respiratory": {
+      "volatility": 60.2,
+      "mode": "VOLATILE",
+      "lstm_weight": 0.3,
+      "baseline_weight": 0.7
+    },
+    "gastrointestinal": {
+      "volatility": 35.9,
+      "mode": "MODERATE",
+      "lstm_weight": 0.5,
+      "baseline_weight": 0.5
+    },
+    "pain_aches": {
+      "volatility": 28.7,
+      "mode": "STABLE",
+      "lstm_weight": 0.7,
+      "baseline_weight": 0.3
+    },
+    "skin_allergy": {
+      "volatility": 52.3,
+      "mode": "MODERATE",
+      "lstm_weight": 0.5,
+      "baseline_weight": 0.5
+    },
+    "injury_trauma": {
+      "volatility": 45.1,
+      "mode": "MODERATE",
+      "lstm_weight": 0.5,
+      "baseline_weight": 0.5
+    },
+    "neurological_psychological": {
+      "volatility": 69.6,
+      "mode": "VOLATILE",
+      "lstm_weight": 0.3,
+      "baseline_weight": 0.7
+    },
+    "cardiovascular": {
+      "volatility": 107.5,
+      "mode": "VOLATILE",
+      "lstm_weight": 0.3,
+      "baseline_weight": 0.7
+    },
+    "fever_general": {
+      "volatility": 41.2,
+      "mode": "MODERATE",
+      "lstm_weight": 0.5,
+      "baseline_weight": 0.5
+    }
+  },
+  "performance": {
+    "initial_prediction": {
+      "mae": 5.01,
+      "average_accuracy_pct": 79.8,
+      "months_above_90_pct": 4,
+      "validation": "2025 rolling forecast (8 months)"
+    },
+    "category_specific_weights": {
+      "average_accuracy_pct": 81.5,
+      "improvement": "+1.7%",
+      "months_above_90_pct": 4
+    },
+    "realtime_adjustment_day14": {
+      "average_accuracy_pct": 93.4,
+      "improvement": "+13.6%",
+      "months_above_90_pct": 6,
+      "error_reduction_on_failures": "80%",
+      "validation": "2025 rolling forecast with day 14 adjustment"
+    }
+  },
+  "changelog": {
+    "v1.0.0": "Initial Hybrid Transfer Learning with global adaptive weights",
+    "v1.1.0": "Added category-specific adaptive weights + real-time adjustment system"
+  }
+}

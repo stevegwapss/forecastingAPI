@@ -1,0 +1,100 @@
+{
+  "prediction_date": "2025-11-25T23:00:42.623403",
+  "predicting_for": "2025-10-01",
+  "last_data_month": "2025-09",
+  "model_version": "1.1.0",
+  "adaptive_weighting": {
+    "enabled": true,
+    "method": "category_specific",
+    "global_volatility": 53.36,
+    "avg_lstm_weight": 0.5,
+    "avg_baseline_weight": 0.5,
+    "category_weights": {
+      "respiratory": {
+        "volatility": 45.0,
+        "mode": "MODERATE",
+        "lstm_weight": 0.5,
+        "baseline_weight": 0.5
+      },
+      "gastrointestinal": {
+        "volatility": 22.9,
+        "mode": "STABLE",
+        "lstm_weight": 0.7,
+        "baseline_weight": 0.3
+      },
+      "pain_aches": {
+        "volatility": 27.5,
+        "mode": "STABLE",
+        "lstm_weight": 0.7,
+        "baseline_weight": 0.3
+      },
+      "skin_allergy": {
+        "volatility": 45.7,
+        "mode": "MODERATE",
+        "lstm_weight": 0.5,
+        "baseline_weight": 0.5
+      },
+      "injury_trauma": {
+        "volatility": 30.6,
+        "mode": "MODERATE",
+        "lstm_weight": 0.5,
+        "baseline_weight": 0.5
+      },
+      "neurological_psychological": {
+        "volatility": 72.1,
+        "mode": "VOLATILE",
+        "lstm_weight": 0.3,
+        "baseline_weight": 0.7
+      },
+      "cardiovascular": {
+        "volatility": 120.0,
+        "mode": "VOLATILE",
+        "lstm_weight": 0.3,
+        "baseline_weight": 0.7
+      },
+      "fever_general": {
+        "volatility": 33.0,
+        "mode": "MODERATE",
+        "lstm_weight": 0.5,
+        "baseline_weight": 0.5
+      }
+    }
+  },
+  "predictions": {
+    "by_category": {
+      "respiratory": 15,
+      "gastrointestinal": 15,
+      "pain_aches": 76,
+      "skin_allergy": 11,
+      "injury_trauma": 7,
+      "neurological_psychological": 1,
+      "cardiovascular": 0,
+      "fever_general": 15
+    },
+    "total": 141
+  },
+  "components": {
+    "transfer_learning": {
+      "respiratory": 10.8,
+      "gastrointestinal": 14.6,
+      "pain_aches": 79.0,
+      "skin_allergy": 11.9,
+      "injury_trauma": 5.7,
+      "neurological_psychological": 3.9,
+      "cardiovascular": 0.6,
+      "fever_general": 12.2
+    },
+    "baseline": {
+      "respiratory": 20.0,
+      "gastrointestinal": 17.0,
+      "pain_aches": 68.0,
+      "skin_allergy": 11.0,
+      "injury_trauma": 9.0,
+      "neurological_psychological": 0.0,
+      "cardiovascular": 0.0,
+      "fever_general": 17.0
+    },
+    "transfer_total": 138.6,
+    "baseline_total": 142.0
+  }
+}
