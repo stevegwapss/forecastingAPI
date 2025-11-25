@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: uzicare-forecasting-api
+    env: python
+    region: oregon
+    plan: free
+    branch: restore-and-improve-migrations
+    buildCommand: pip install -r final_model/requirements.txt
+    startCommand: cd modeltraining && gunicorn -w 1 -b 0.0.0.0:$PORT forecasting_api:app --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
