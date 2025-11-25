@@ -62,18 +62,42 @@ MODEL_CONFIG = None
 def initialize_model():
     """Initialize the forecasting model at startup"""
     global MODEL_LOADED, MODEL_CONFIG
+    
+    # Skip if already loaded (prevent re-initialization)
+    if MODEL_LOADED:
+        logger.info("Model already loaded, skipping initialization")
+        return
+    
     try:
-        logger.info("Loading Hybrid Transfer Learning model...")
+        logger.info("🔄 Loading Hybrid Transfer Learning model...")
+        logger.info(f"📁 Current directory: {os.getcwd()}")
+        logger.info(f"📂 Script directory: {os.path.dirname(__file__)}")
+        
         config, _ = load_production_model()
         MODEL_CONFIG = config
         MODEL_LOADED = True
-        logger.info("✅ Model loaded successfully!")
+        
+        logger.info("=" * 60)
+        logger.info("✅ MODEL LOADED SUCCESSFULLY!")
         logger.info(f"   Model: {config['model_name']}")
         logger.info(f"   Version: {config['version']}")
         logger.info(f"   Trained: {config['trained_date'][:10]}")
+        logger.info("=" * 60)
     except Exception as e:
-        logger.error(f"❌ Failed to load model: {e}")
+        logger.error("=" * 60)
+        logger.error(f"❌ FAILED TO LOAD MODEL")
+        logger.error(f"   Error: {str(e)}")
+        logger.error(f"   Type: {type(e).__name__}")
+        logger.error("=" * 60)
+        import traceback
+        logger.error(traceback.format_exc())
         MODEL_LOADED = False
+
+# Ensure model loads before first request
+@app.before_request
+def load_model_before_request():
+    """Load model before handling the first request"""
+    initialize_model()
 
 # API Routes
 @app.route('/', methods=['GET'])
